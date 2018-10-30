@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Wypożyczone książki</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="display-4">Wypożyczone książki</h1>
+
+    <br>
+
+    <table class="table table-bordered" border="1" id="dataTable" cellspacing="0">
+        <thead>
+        <tr>
+            <th>Nazwa książki</th>
+            <th>Data wypożyczenia</th>
+            <th>Data zwrotu</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="BookBorrow,word : ${BorrowedBooks}">
+            <td th:text="${names[word.index]}"></td>
+            <td th:text="${BookBorrow.startDate}"></td>
+            <td th:text="${BookBorrow.endDate}"></td>
+        </tr>
+
+        </tbody>
+
+
+
+    </table>
+
+
+
+
+    <a th:href="@{/allusers}" class="btn btn-md btn-success" type="Submit">Powrót</a>
+</div>
+</body>
+</html>

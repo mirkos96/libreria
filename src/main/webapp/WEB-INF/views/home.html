@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title sec:authorize="hasAuthority('ADMIN')">Panel Administratora</title>
+    <title sec:authorize="hasAuthority('USER')">Panel Użytkownika</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger btn-block" name="registration"
+                type="Submit">Wyloguj</button>
+    </form>
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${username}"></span>
+
+                <div class="container">
+                    <div class="row">
+
+                        <div class="btn-group ">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Powiadomienia (<span th:text="${count}"></span>) <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="list-group-item text-danger" th:each="note : ${word}" th:text="${note}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <form th:action="@{/addbook}" method="get">
+                        <button class="btn btn-md btn-default btn-block" type="Submit">Dodaj książkę</button>
+                    </form>
+                    <br>
+                    <form th:action="@{/allbooks.html}" method="get">
+                        <button class="btn btn-md btn-default btn-block" type="Submit">Księgozbiór</button>
+                    </form>
+                    <br>
+                    <form th:action="@{/allusers.html}" method="get">
+                        <button class="btn btn-md btn-default btn-block" type="Submit">Wykaz użytkowników</button>
+                    </form>
+                    <br>
+                    <br>
+                    <form th:action="@{/profile}" method="get">
+                        <button class="btn btn-md btn-default btn-block" type="Submit">Profil</button>
+                    </form>
+                    <br>
+                </div>
+                <div sec:authorize="hasAuthority('USER')">
+                    Ta treść jest dostępna tylko dla <b>użytkowników</b>.
+                    <form th:action="@{/allbooks.html}" method="get">
+                        <button class="btn btn-md btn-default btn-block" type="Submit">Księgozbiór</button>
+                    </form>
+                    <br>
+                    <form th:action="@{/profile}" method="get">
+                        <button class="btn btn-md btn-default btn-block" type="Submit">Profil</button>
+                    </form>
+                    <br>
+                </div>
+            </div>
+            <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
